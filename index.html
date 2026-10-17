@@ -201,6 +201,9 @@ gtag('config', 'G-DDD1Y5SELD');
 
     <button class="lesson-button"
       onclick="startQuiz('A1', 'てけい')">てけい</button>
+
+    <button class="lesson-button"
+      onclick="startQuiz('A1', 'ないけい')">ないけい</button>
   </div>
 
   <div class="course-title">A2.1</div>
@@ -214,6 +217,9 @@ gtag('config', 'G-DDD1Y5SELD');
 
     <button class="lesson-button"
       onclick="startQuiz('A2.1', 'てけい')">てけい</button>
+
+    <button class="lesson-button"
+      onclick="startQuiz('A2.1', 'ないけい')">ないけい</button>
   </div>
 
 </div>
@@ -316,6 +322,7 @@ async function loadExcel() {
       const masu = String(row[1] ?? "").trim();
       const dictionary = String(row[2] ?? "").trim();
       const te = String(row[3] ?? "").trim();
+      const nai = String(row[4] ?? "").trim();
 
       /* 必要な項目がそろっている行だけ読み込む */
 
@@ -328,12 +335,13 @@ async function loadExcel() {
         continue;
       }
 
-      originalWords.push({
-        course: course,
-        masu: masu,
-        dictionary: dictionary,
-        te: te
-      });
+originalWords.push({
+  course: course,
+  masu: masu,
+  dictionary: dictionary,
+  te: te,
+  nai: nai
+});
 
     }
 
@@ -443,19 +451,25 @@ function getQuestionAndAnswer(word) {
     };
   }
 
-  return {
-    question: word.masu,
-    answer: word.te
-  };
+  if (selectedForm === "てけい") {
+    return {
+      question: word.masu,
+      answer: word.te
+    };
+  }
+
+  if (selectedForm === "ないけい") {
+    return {
+      question: word.masu,
+      answer: word.nai
+    };
+  }
 
 }
-
 
 /* =========================================
    【】のルビを表示形式に変換
    ========================================= */
-
-
 
 function rubyText(text) {
 
