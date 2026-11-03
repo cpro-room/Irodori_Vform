@@ -574,7 +574,7 @@ function adjustQuestionSize() {
 
   const element = document.getElementById("question");
 
-  element.style.fontSize = "100px";
+  element.style.fontSize = window.innerWidth <= 600 ? "60px" : "100px";
 
   const maxWidth = element.clientWidth;
 
@@ -595,7 +595,7 @@ function adjustAnswerSize() {
 
   const element = document.getElementById("reading");
 
-  element.style.fontSize = "80px";
+  element.style.fontSize = window.innerWidth <= 600 ? "48px" : "80px";
 
   const maxWidth = element.clientWidth;
 
