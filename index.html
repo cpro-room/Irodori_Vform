@@ -33,6 +33,10 @@ body {
   margin: 10px 0 12px;
 }
 
+.course-title span {
+  font-size: 0.7em;
+}
+
 /* 活用ボタン */
 .lesson-buttons {
   display: flex;
@@ -54,6 +58,16 @@ body {
 
 .lesson-button:active {
   background: #ddd;
+}
+
+/* A1：薄いピンク */
+.a1-buttons .lesson-button {
+  background: #FCE4EC;
+}
+
+/* A2.1：薄いオレンジ */
+.a21-buttons .lesson-button {
+  background: #FCE4D6;
 }
 
 /* 選択後の見出し */
@@ -221,9 +235,9 @@ gtag('config', 'G-DDD1Y5SELD');
 
   <img src="logo.png" class="logo" alt="logo">
 
-  <div class="course-title">A1</div>
+<div class="course-title">A1 <span id="count-A1"></span></div>
 
-  <div class="lesson-buttons">
+<div class="lesson-buttons a1-buttons">
     <button class="lesson-button"
       onclick="startQuiz('A1', 'ますけい')">ますけい</button>
 
@@ -237,9 +251,9 @@ gtag('config', 'G-DDD1Y5SELD');
       onclick="startQuiz('A1', 'ないけい')">ないけい</button>
   </div>
 
-  <div class="course-title">A2.1</div>
+<div class="course-title">A2.1 <span id="count-A2.1"></span></div>
 
-  <div class="lesson-buttons">
+<div class="lesson-buttons a21-buttons">
     <button class="lesson-button"
       onclick="startQuiz('A2.1', 'ますけい')">ますけい</button>
 
@@ -389,6 +403,12 @@ originalWords.push({
     if (originalWords.length === 0) {
       throw new Error("使用できる動詞データがありません。");
     }
+
+document.getElementById("count-A1").textContent =
+  "(" + originalWords.filter(word => word.course === "A1").length + "こ)";
+
+document.getElementById("count-A2.1").textContent =
+  "(" + originalWords.filter(word => word.course === "A2.1").length + "こ)";
 
     document.getElementById("loading").style.display = "none";
 
@@ -638,13 +658,17 @@ function handle() {
 
   currentIndex++;
 
-  /* 最後まで進んだら再シャッフル */
+  /* 最後まで進んだら終了 */
 
   if (currentIndex >= words.length) {
 
-    words = shuffle([...words]);
+    document.getElementById("question").textContent = "おわり";
+    document.getElementById("reading").textContent = "";
+    document.getElementById("counter").textContent = "";
 
-    currentIndex = 0;
+    document.getElementById("answer-button").style.display = "none";
+
+    return;
 
   }
 
